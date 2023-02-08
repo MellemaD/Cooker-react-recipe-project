@@ -1,10 +1,21 @@
 import './App.css';
+import React from 'react';
+import Footer from "./containers/footer/Footer";
+import Header from "./containers/Header";
+import Pages from "./pages/Pages";
 
 function App() {
+
+
   return (
-      <h1>
-        "Cooker"
-      </h1>
+      <div className="App">
+          <Header/>
+
+          <Pages/>
+          {/*Includes routes/route*/}
+
+          <Footer/>
+    </div>
   );
 }
 
