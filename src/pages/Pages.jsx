@@ -7,6 +7,7 @@ import ProfilePage from "./profilepage/ProfilePage";
 import SearchResults from "./searchresults/SearchResults";
 import FavoriteList from "./favoritelist/FavoriteList";
 import Authenticate from "./authenticate/Authenticate";
+import Register from "./register/Register";
 
 function Pages() {
     const location = useLocation();
@@ -15,6 +16,7 @@ function Pages() {
 
             <Routes location={location} key={location.pathname}>
                 <Route path="/" element={<Homepage/>} />
+                <Route path="/register" element={<Register/>} />
                 <Route path="/authenticate" element={<Authenticate/>} />
                 <Route path="/favorite" element={<FavoriteList/>} />
                 <Route path="/profile" element={<ProfilePage/>} />
