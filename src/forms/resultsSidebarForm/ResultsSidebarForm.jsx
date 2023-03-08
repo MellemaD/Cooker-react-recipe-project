@@ -10,91 +10,65 @@ function ResultsSidebarForm({    sidebarFormState,
                              }) {
 
 
-// ! maybe change the values to "&diet=... so that they're ready for URI"
 
-    // #1 Create all the arrays of values to map over and display
+    // * 1. Create all the arrays of values to map over and display
 
     const diets = [
-        { value: 'balanced', display: 'Balanced' },
-        { value: 'high-fiber', display: 'High Fiber' },
-        { value: 'high-protein', display: 'High Protein' },
-        { value: 'low-carb', display: 'Low Carb' },
-        { value: 'low-fat', display: 'Low Fat' },
-        { value: 'low-sodium', display: 'Low Sodium' },
+        { value: '&diet=balanced', display: 'Balanced' },
+        { value: '&diet=high-fiber', display: 'High Fiber' },
+        { value: '&diet=high-protein', display: 'High Protein' },
+        { value: '&diet=low-carb', display: 'Low Carb' },
+        { value: '&diet=low-fat', display: 'Low Fat' },
+        { value: '&diet=low-sodium', display: 'Low Sodium' },
     ];
 
 
     const healths = [
-        { value: 'alcohol-free', display: 'Alcohol-free' },
-        { value: 'dairy-free', display: 'Dairy-free' },
-        { value: 'egg-free', display: 'Egg-free' },
-        { value: 'fish-free', display: 'Fish-free' },
-        { value: 'gluten-free', display: 'Gluten-free' },
-        { value: 'keto-friendly', display: 'Keto-friendly' },
-        { value: 'kosher', display: 'Kosher' },
-        { value: 'low-sugar', display: 'Low Sugar' },
-        { value: 'paleo', display: 'Paleo' },
-        { value: 'peanut-free', display: 'Peanut-free' },
-        { value: 'pork-free', display: 'Pork-free' },
-        { value: 'shellfish-free', display: 'Shellfish-free' },
-        { value: 'vegan', display: 'Vegan' },
-        { value: 'vegetarian', display: 'Vegetarian' },
+        { value: '&health=alcohol-free', display: 'Alcohol-free' },
+        { value: '&health=dairy-free', display: 'Dairy-free' },
+        { value: '&health=egg-free', display: 'Egg-free' },
+        { value: '&health=fish-free', display: 'Fish-free' },
+        { value: '&health=gluten-free', display: 'Gluten-free' },
+        { value: '&health=keto-friendly', display: 'Keto-friendly' },
+        { value: '&health=kosher', display: 'Kosher' },
+        { value: '&health=low-sugar', display: 'Low Sugar' },
+        { value: '&health=paleo', display: 'Paleo' },
+        { value: '&health=peanut-free', display: 'Peanut-free' },
+        { value: '&health=pork-free', display: 'Pork-free' },
+        { value: '&health=shellfish-free', display: 'Shellfish-free' },
+        { value: '&health=vegan', display: 'Vegan' },
+        { value: '&health=vegetarian', display: 'Vegetarian' },
     ];
 
 
 
     const cuisineTypes = [
-        { value: 'american', display: 'American' },
-        { value: 'asian', display: 'Asian' },
-        { value: 'british', display: 'British' },
-        { value: 'greek', display: 'Greek' },
-        { value: 'mexican', display: 'Mexican' },
-        { value: 'indian', display: 'Indian' },
-        { value: 'mediterranean', display: 'Mediterranean' },
+        { value: '&cuisineType=american', display: 'American' },
+        { value: '&cuisineType=asian', display: 'Asian' },
+        { value: '&cuisineType=british', display: 'British' },
+        { value: '&cuisineType=greek', display: 'Greek' },
+        { value: '&cuisineType=mexican', display: 'Mexican' },
+        { value: '&cuisineType=indian', display: 'Indian' },
+        { value: '&cuisineType=mediterranean', display: 'Mediterranean' },
 
     ];
 
     const mealTypes = [
-        { value: 'breakfast', display: 'Breakfast' },
-        { value: 'brunch', display: 'Brunch' },
-        { value: 'lunch/dinner', display: 'Lunch/Dinner' },
-        { value: 'snack', display: 'Snack' },
+        { value: '&mealType=breakfast', display: 'Breakfast' },
+        { value: '&mealType=brunch', display: 'Brunch' },
+        { value: '&mealType=lunch/dinner', display: 'Lunch/Dinner' },
+        { value: '&mealType=snack', display: 'Snack' },
     ];
 
 
 
-
-   const cookingTimeRangesOptions = [
-       { value: '<15',
-           display: '< 15mins',
-           bounds: { min: 0, max: 15 } },
-       {
-           value: '<30',
-           display: '< 30mins',
-           bounds: { min: 0, max: 30 },
-       },
-       {
-           value: '30-60',
-           display: '30 - 60mins',
-           bounds: { min: 30, max: 60 },
-       },
-       {
-           value: '60+',
-           display: '> 1 hour',
-           bounds: { min: 60 },
-       },
-   ];
-
-
    const calorieAmountRangesOptions = [
 
-       // Calories under..?
-       // Bulking friendly..?
 
        {
            value: '<400',
            display: '<400',
-           bounds: { max: 400 },
+           bounds: { min: 0, max: 400 },
        },
        {
            value: '400-600',
@@ -109,7 +83,7 @@ function ResultsSidebarForm({    sidebarFormState,
        {
            value: '800+',
            display: '800+',
-           bounds: { min: 800 },
+           bounds: { min: 800, max: 5000 },
        },
 
    ];
@@ -117,7 +91,9 @@ function ResultsSidebarForm({    sidebarFormState,
 
 
 
-    // * #2 Create handle functions to make changes to the states
+    // * 2. Create handle functions to make changes to the states
+
+        // * 3. Add to these handles the change of URI
 
 
     /*const handlePersonalSelectionChange = (checked) => {
@@ -131,12 +107,8 @@ function ResultsSidebarForm({    sidebarFormState,
 
 
 
-    //  With handle functions, when pushing into array it should add "&${display}=value"
         //  When unchecked, it should remove the value from the array
-
-
     const handleDietsSelect = (e, option) => {
-        console.log(e.target.checked, option);
         if (e.target.checked) {
             setSidebarFormState((prevState) => {
                 const diets = [...prevState.diets];
@@ -151,11 +123,9 @@ function ResultsSidebarForm({    sidebarFormState,
                 };
             });
         }
-        console.log(sidebarFormState);
     };
 
     const handleHealthsSelect = (e, option) => {
-        console.log(e.target.checked, option);
         if (e.target.checked) {
             setSidebarFormState((prevState) => {
                 const healths = [...prevState.healths];
@@ -177,7 +147,6 @@ function ResultsSidebarForm({    sidebarFormState,
 
 
     const handleCuisineTypeSelect = (e, option) => {
-        console.log(e.target.checked, option);
         if (e.target.checked) {
             setSidebarFormState((prevState) => {
                 const cuisineTypes = [...prevState.cuisineTypes];
@@ -197,7 +166,6 @@ function ResultsSidebarForm({    sidebarFormState,
 
 
     const handleMealTypeSelect = (e, option) => {
-        console.log(e.target.checked, option);
         if (e.target.checked) {
             setSidebarFormState((prevState) => {
                 const mealTypes = [...prevState.mealTypes];
@@ -215,45 +183,7 @@ function ResultsSidebarForm({    sidebarFormState,
     };
 
 
-    const handleCookingTimeRangesSelect = (e, option, bounds) => {
-        console.log(e.target.checked, option, bounds);
-        if (e.target.checked) {
-            setSidebarFormState((prevState) => {
-                const timeRanges = [...prevState.timeRanges];
-                timeRanges.push(option);
-
-                const timeBounds = [...prevState.timeBounds];
-                timeBounds.push(bounds.min);
-                timeBounds.push(bounds.max);
-
-                const newFormState = {
-                    ...prevState,
-                    timeRanges,
-                    timeBounds,
-                };
-                console.log(newFormState);
-                return newFormState;
-            });
-        } else {
-            setSidebarFormState((prevState) => {
-                const newFormState = {
-                    ...prevState,
-                    timeRanges: prevState.timeRanges.filter(
-                        (timeRange) => option !== timeRange
-                    ),
-                    timeBounds: prevState.timeBounds.filter(
-                        (bound) => ![bounds.min, bounds.max].includes(bound)
-                    ),
-                };
-
-                console.log(newFormState);
-                return newFormState;
-            });
-        }
-    };
-
 const handleCalorieAmountRangesSelect = (e, option, bounds) => {
-    console.log(e.target.checked, option, bounds);
     if (e.target.checked) {
         setSidebarFormState((prevState) => {
             const calorieRanges = [...prevState.calorieRanges];
@@ -269,6 +199,8 @@ const handleCalorieAmountRangesSelect = (e, option, bounds) => {
                 calorieBounds,
             };
             console.log(newFormState);
+            console.log(calorieRanges);
+            console.log(calorieBounds);
             return newFormState;
         });
     } else {
@@ -294,12 +226,13 @@ const handleCalorieAmountRangesSelect = (e, option, bounds) => {
     return (
 // checked={sidebarFormState.personalSelections}
 // onChange={handlePersonalSelectionChange}
-        // ! Wrap each part in its own two divs
+    <div>
         <div>
             {/* Part 1: Personal Selection */}
+        </div>
 
             {/* Part 2: Diet */}
-
+        <div>
             <h3>
                     Diet:
                 </h3>
@@ -323,8 +256,10 @@ const handleCalorieAmountRangesSelect = (e, option, bounds) => {
                         );
                     })}
                 </ul>
+        </div>
 
             {/* Part 3: Health: */}
+        <div>
             <h3>
                 Health:
             </h3>
@@ -348,9 +283,10 @@ const handleCalorieAmountRangesSelect = (e, option, bounds) => {
                     );
                 })}
             </ul>
+        </div>
 
             {/* Part 4: Type of Cuisine: */}
-
+        <div>
             <h3>
                 Cuisine Types:
             </h3>
@@ -374,10 +310,11 @@ const handleCalorieAmountRangesSelect = (e, option, bounds) => {
                     );
                 })}
             </ul>
+        </div>
 
 
             {/* Part 5: Type of Meal: */}
-
+        <div>
             <h3>
                 Meal Types:
             </h3>
@@ -401,6 +338,7 @@ const handleCalorieAmountRangesSelect = (e, option, bounds) => {
                     );
                 })}
             </ul>
+        </div>
 
 
 
@@ -433,36 +371,6 @@ const handleCalorieAmountRangesSelect = (e, option, bounds) => {
                 </ul>
             </div>
 
-
-
-            {/* Part 7: Amount of time: */}
-            <div>
-                <h3>
-                    Duration
-                </h3>
-                <ul>
-                    {cookingTimeRangesOptions.map((option) => {
-                        return (
-                            <li key={option.value}>
-                                <label>
-                                    <input
-                                        type='checkbox'
-                                        onChange={(e) =>
-                                            handleCookingTimeRangesSelect(e, option.value, option.bounds)
-                                        }
-                                        checked={sidebarFormState.timeRanges.includes(
-                                            option.value
-                                        )}
-                                    />
-                                    <span>
-                                         {option.display}
-                                    </span>
-                                </label>
-                            </li>
-                        );
-                    })}
-                </ul>
-            </div>
 </div>
 )
     }

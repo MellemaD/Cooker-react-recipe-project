@@ -32,7 +32,7 @@ function Popular() {
 
             // * 4. If localStorage is empty, API request follows
                 // eslint-disable-next-line no-undef
-                const response = await axios.get(`https://api.edamam.com/api/recipes/v2?type=public&q=popular&app_id=${process.env.REACT_APP_API_ID}app_key=${process.env.REACT_APP_API_KEY}&imageSize=REGULAR`);
+                const response = await axios.get(`https://api.edamam.com/api/recipes/v2?type=public&q=popular&app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}&imageSize=REGULAR`);
                 console.log(response.data);
 
                 // ! add functionality to filter out recipes without image
@@ -64,6 +64,7 @@ function Popular() {
                 <span>
                 Hottest picks has failed loading
             </span>}
+
             <h2>Hottest picks:</h2>
             <Cards data={popular}/>
 

@@ -26,7 +26,7 @@ function Cards({data}) {
                 {/* eslint-disable-next-line react/prop-types */}
                 {data.map((item) => {
                     return (
-                        <div className="card" key={item.recipe.calories}>
+                        <div className="card" key={item.recipe.url}>
                             <a href={item.recipe.url} target='_blank' rel="noreferrer">
                                 <img src={item.recipe.image} alt={item.recipe.label}/>
                                 <div className='content'>
@@ -40,7 +40,7 @@ function Cards({data}) {
                                     </ul>
                                     <span>...</span>
                                 </div>
-                                <button onClick={''} className='top-right'>
+                                <button className='top-right'>
 
                                      <span>
                                         {/* TODO: Check if user is logged in, if not, heart doesn't work */}

@@ -14,6 +14,8 @@ import axios from "axios";
 import SearchRecipeForm from "../../forms/SearchRecipeForm";
 import Cards from "../../containers/cards/Cards";
 import ResultsSidebarForm from "../../forms/resultsSidebarForm/ResultsSidebarForm";
+import CreateURI from "../../helpers/CreateURI";
+import createURI from "../../helpers/CreateURI";
 
 function SearchResults() {
 
@@ -24,7 +26,7 @@ function SearchResults() {
 // * Later
     // TODO: Using params, I want to update searchQuery through a functional search bar in the navbar too
     // TODO: Implement a way to set in order the results
-    // TODO: Use Pagination (top) to guide user to next page
+    // TODO: Use Pagination (env) to guide user to next page
 
 
     // * 1. useStates
@@ -58,30 +60,29 @@ function SearchResults() {
 
 
     // * 6. create a helper to create the URI?
-        // const [uri, setUri] = useState({});
 
 
 
 
 
+        // * 3.  useEffect in which we call fetchResults based on changes of (for now) searchQuery.
 
-    // * 3.  useEffect in which we call fetchResults based on changes of (for now) searchQuery.
+        // ! add to that the added States
+        useEffect(() => {
 
-    // ! add to that the added States
-    useEffect(() => {
+            // * 2. try/catch, await axios with api
+            async function fetchResults(){
+                toggleError(false);
 
-        // * 2. try/catch, await axios with api
-        async function fetchResults(){
-            toggleError(false);
-
-            try{
-                // eslint-disable-next-line no-unused-vars
-                const result = await axios.get(
-                    // process is not defined, need to disable eslint
-                    // eslint-disable-next-line no-undef
-                    `https://api.edamam.com/api/recipes/v2?type=public&q=${searchQuery}&app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}`)
+                try{
+                    // eslint-disable-next-line no-unused-vars
+                    const result = await axios.get(
+                        // process is not defined, need to disable eslint
+                        // eslint-disable-next-line no-undef
+                        `https://api.edamam.com/api/recipes/v2?type=public&q=${searchQuery}&app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}${CreateURI(sidebarForm)}`)
                     /*.then(result => {*/
                     setResultData(result.data.hits);
+                    console.log(createURI(sidebarForm))
 
 
                 // Create recipesFoundMessage to display to the user how many results were found
@@ -93,6 +94,10 @@ function SearchResults() {
                     }
                     case 1: {
                         setRecipesFoundMessage( 'Only one recipe found');
+                        break;
+                    }
+                    case 10000:{
+                        setRecipesFoundMessage('9999+ recipes found');
                         break;
                     }
                     default: {
@@ -113,9 +118,9 @@ function SearchResults() {
         }
 
         if (searchQuery){
-          fetchResults();
+          void fetchResults();
         }
-        }, [searchQuery])
+        }, [searchQuery, sidebarForm] )
 
 
     return (
