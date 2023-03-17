@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 
 // eslint-disable-next-line react/prop-types
-function SearchRecipeForm ({setQueryHandler}) {
+function SearchRecipeForm ({setQueryHandler, toggleSearchTrigger, searchTrigger}) {
 
     const [searchFormState, setSearchFormState] = useState("")
 
@@ -12,7 +12,7 @@ function SearchRecipeForm ({setQueryHandler}) {
     function handleSubmit(e) {
         e.preventDefault();
         setQueryHandler(searchFormState);
-
+        toggleSearchTrigger(!searchTrigger);
     }
 
     return (

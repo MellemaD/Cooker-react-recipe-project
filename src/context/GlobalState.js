@@ -1,4 +1,4 @@
-import React, {createContext, useState} from "react";
+import React, {createContext, useEffect, useState} from "react";
 
 
 //* 1. createContext
@@ -16,115 +16,119 @@ export const GlobalProvider = (props) => {
         isActivated: false,
         diets: [],
         healths: [],
-    });     // # personalSelection used at sidebarForm to adjust the array
-    // Not used elsewhere, because at sidebarForm, the onclick for pS will set
-    // the values of the filters in the useState and thereby set them to checked
+        calorieRanges: [],
+        calorieBounds: [],
+        cuisineTypes: [],
+        mealTypes: [],
+    }) // #pS used at profile to set and at results to set to filtersForm
 
-    // Can user still select other values and thereby de-select them?
-    // Can the values be locked to checked when pS is on?
-    // If user deselects pS, then all values should be removed from form
+    //* 4. Try and catch inside useEffect to getItem from local Storage and check if it exists
+    useEffect( () => {
+        try {
+            const storedFavourites = JSON.parse(localStorage.getItem(localStorageFavourites))
 
-    //* 4. Try and catch to getItem from local Storage and check if it exists
-    try {
-        const storedFavourites = JSON.parse(localStorage.getItem(localStorageFavourites))
-
-        if(storedFavourites && Array.isArray(storedFavourites)){
-            setFavourites(storedFavourites);
+            if(storedFavourites && Array.isArray(storedFavourites)){
+                setFavourites(storedFavourites);
+            }
+        } catch (error){
+            console.log(error)
+            // Dont log errors, send message
         }
-    } catch (error){
-        console.log(error)
-        // Dont log errors, send message
-    }
 
-    try {
-        const storedSelection = JSON.parse(localStorage.getItem(localStoragePersonalSelection))
+    }, [] )
 
-        if(storedSelection && Array.isArray(storedSelection)){
-            setPersonalSelection(storedSelection);
+    useEffect( () => {
+        try {
+            const storedSelection = JSON.parse(localStorage.getItem(localStoragePersonalSelection))
+
+            if(storedSelection){
+                setPersonalSelection(storedSelection);
+            }
+        } catch (error){
+            console.log(error)
+            // Dont log errors, send message
         }
-    } catch (error){
-        console.log(error)
-        // Dont log errors, send message
-    }
+    }, [] )
+
 
 
     //* 5. A function to add to favourites (a max number of 20)  #used at cards
-    // Needs to set to localStorage
-    const addFavourite = (recipe) => {
-        if(favourites.length <20 && !isFavourite(recipe)){
-
-            setFavourites(prev => [...prev, recipe]);
-            localStorage.setItem(localStorageFavourites, JSON.stringify(favourites));
-            return '';
+    //  Needs to set to localStorage
+        const addFavourite = (recipe, ID, label, ingredientLines, calories, image, link) => {
+        console.log(ID, label)
+        console.log(favourites.length)
+        if(favourites.length <20 && !isFavourite(ID)){
+            // Added "recipe:" to make mapping at Cards easier
+            const addRecipe =
+                {
+                    recipe: {
+                        ID: ID,
+                        label: label,
+                        ingredientLines: ingredientLines,
+                        calories: calories,
+                        image: image,
+                        link: link,
+                    }
+                }
+            // Setting item to localStorage right after setFavourites will still use the previous value of favourites.
+            // Therefore, I need to create a new const holding the value and use that to set.
+            setFavourites(prev => {
+                    const newFavourites = [
+                        ...prev,
+                        addRecipe
+                    ];
+                    localStorage.setItem(localStorageFavourites, JSON.stringify(newFavourites));
+                    return newFavourites
+                })
         } else{
             return "Sorry, there are too many favorites"
         }
+
     }
 
 
     //* 6. A function to remove from favourites   #used at cards
+    // eslint-disable-next-line no-unused-vars
     const deleteFavourite = (recipe) => {
         // Don't mutate state in setState. Using previous value (array) we filter out
         // that which doesn't equal to "to be deleted" and set this as the new array
         let toBeDeleted = recipe;
-        setFavourites(prev => prev.filter(favourite => favourite !== toBeDeleted))
-        // LocalStorage.setItem, because setting the new array will also get rid of the toBeDeleted.
-        localStorage.setItem(localStorageFavourites, JSON.stringify(favourites))
+        setFavourites(prev => {
+            const newFavourites = prev.filter(x => x.recipe.label !== toBeDeleted.label);
+            console.log(newFavourites)
+            // LocalStorage.setItem, because setting the new array will also get rid of the toBeDeleted.
+            localStorage.setItem(localStorageFavourites, JSON.stringify(newFavourites)) ;
+            return newFavourites
+        })
     }
 
 
     //* 7. A function to check if it is favourite (to decide which heart should be displayed and which action it should activate)
     // # used at cards
-    function isFavourite(recipe) {
-
-        let found = false;
-        for (let i = 0; i<favourites.length; i++) {
-            if (favourites[i].ID === recipe.ID){
-                found = true;
-                break;
-            }
-        }
-        return found;
-    }
-
-
-    //* 8. A function to add to personalSelection  #used at profile
-    // Needs to set to localStorage
-    const addToPersonalSelection = (diets, healths) => {
-        if (diets){
-            setPersonalSelection({
-                ...personalSelection,
-                diets: [...personalSelection.diets, diets]
-        })
-        } if (healths){
-            setPersonalSelection({
-                ...personalSelection,
-                healths: [...personalSelection.healths, healths]
-            })
+    // eslint-disable-next-line no-unused-vars
+    function isFavourite(label) {
+        if(label){
+            const myFavourite = favourites.find((x) => x.recipe.ID === label)
+            return !!myFavourite;
         }
     }
 
-    //* 9. A function to remove from personalSelection #used at profile
-    const removeFromPersonalSelection = (diets, healths) => {
-        if (diets){
-            let toBeDeleted = diets
-            for (let i = 0; i <toBeDeleted.length; i++) {
-                setPersonalSelection({
-                    ...personalSelection,
-                    diets: [...personalSelection.diets.filter(diet => diet !== toBeDeleted[i])]
-                })
-            }
-        }
-        if (healths){
-            let toBeDeleted = healths
-            for (let i = 0; i <toBeDeleted.length; i++) {
-                setPersonalSelection({
-                    ...personalSelection,
-                    healths: [...personalSelection.healths.filter(health => health !== toBeDeleted[i])]
-                })
-            }
-        }
+
+    //* 8. A function to add to personalSelection  #used at /profile/ filtersForm
+        //Changed 'addTo' and 'deleteFrom' to 'save'. I can use another component for these, only need to save to localStorage
+    const savePersonalSelection = (newPersonalSelection) => {
+        localStorage.setItem(localStoragePersonalSelection, JSON.stringify(newPersonalSelection));
     }
+
+    //* 9. A function to check if personalSelection is empty (less code at required spots)
+    function isPersonalSelectionEmpty(personalSelection){
+        return personalSelection.diets.length === 0 &&
+            personalSelection.healths.length === 0 &&
+            personalSelection.calorieBounds.length === 0 &&
+            personalSelection.cuisineTypes.length === 0 &&
+            personalSelection.mealTypes.length === 0;
+    }
+
 
 
     //* 10. contextData and return global context
@@ -132,8 +136,8 @@ export const GlobalProvider = (props) => {
         addFavourite,
         deleteFavourite,
         isFavourite,
-        addToPersonalSelection,
-        removeFromPersonalSelection,
+        savePersonalSelection,
+        isPersonalSelectionEmpty,
         favourites,
         setFavourites,
         personalSelection,

@@ -11,7 +11,7 @@ function NavBar() {
 
     // TODO: Create a function that checks whether the user is logged in or not
     // ! Check if user is logged in
-    let loggedIn = false;
+    let loggedIn = true;
 
     const navigate = useNavigate();
 

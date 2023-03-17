@@ -2,24 +2,51 @@ import './cards.css';
 
 export default Cards;
 
-// I have decided to use a link leading to the url/website of the actual recipe
-// as part of the data, it doesn't actually show a recipe, only ingredients
-// and nutrients
-
-import React from 'react';
+import React, {useContext} from 'react';
 import {AiOutlineHeart, AiFillHeart} from "react-icons/ai";
 import {RiHeartAddLine} from "react-icons/ri";
 import {FaHeartBroken} from "react-icons/fa";
+// import {AuthContext} from "../../context/AuthContext";
+import {GlobalContext} from "../../context/GlobalState";
 
-// TODO: create functionality/useState to check if person is logged in and if recipe is favorite already
-// TODO: Create onClick functionality that allows user to save recipes. (( What does he save? Recipe ID? The link in the object in an array and favorites maps these and requests these?))
-//
 {/* TODO: Check if user is logged in, if not, heart doesn't work */}
-{/* TODO: Add onClick functionality that adds to favorite page */}
-const isFavorite = false;
 
 // eslint-disable-next-line react/prop-types
 function Cards({data}) {
+
+
+
+    // const [error, toggleError] = useState(false);
+    // const {isAuth} = useContext(AuthContext);
+    // const isAuth = useContext( AuthContext )
+    const {addFavourite,
+        deleteFavourite,
+        isFavourite, favourites} = useContext(GlobalContext)
+
+    const handleSetFavourite = (event, recipe) => {
+        event.preventDefault();
+        // if (isAuth){
+            if(!isFavourite(recipe.label)){
+                addFavourite(recipe.label,
+                    recipe.label,
+                    recipe.label,
+                    recipe.ingredientLines,
+                    recipe.calories,
+                    recipe.image,
+                    recipe.url
+            )
+                return ''
+            } else if(isFavourite(recipe.label)){
+                deleteFavourite(recipe)
+                console.log(favourites);
+                return ''
+            }
+        // } else {
+        //     // ! Need timer on error message
+        //     toggleError(true)
+        // }
+    }
+
     return (
         <div>
             <div className='container'>
@@ -40,24 +67,28 @@ function Cards({data}) {
                                     </ul>
                                     <span>...</span>
                                 </div>
-                                <button className='top-right'>
-
+                            </a>
+                                <button
+                                    onClick={(event) => handleSetFavourite(event, item.recipe)}
+                                    className='top-right'>
                                      <span>
                                         {/* TODO: Check if user is logged in, if not, heart doesn't work */}
-                                        {/* TODO: Add onClick functionality that adds to favorite page */}
-                                        {isFavorite ? <AiFillHeart/> : <AiOutlineHeart/>}
+                                        {isFavourite(item.recipe.label) ? <AiFillHeart/> : <AiOutlineHeart/>}
                                     </span>
 
                                     <span>
                                         {/*hover: */}
-                                        {isFavorite ? <FaHeartBroken/> : <RiHeartAddLine/> }
+                                        {isFavourite(item.recipe.label) ? <FaHeartBroken/> : <RiHeartAddLine/> }
                                     </span>
 
                                 </button>
+                                <a href={item.recipe.url} target='_blank' rel="noreferrer">
 
                                 <h2>{item.recipe.label}</h2>
-
                             </a>
+                            {/*{error &&*/}
+                            {/*    <span>You need to be logged in to add to favourites</span>*/}
+                            {/*}*/}
                         </div>
                     )
                 })}
