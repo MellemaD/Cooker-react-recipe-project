@@ -1,23 +1,4 @@
-
-//
-/*const [sidebarForm, setSidebarForm] = useState({
-    // * Connected to logged in and personalSelections:
-    diets: [],
-    // ! Locked if not logged in:
-    personalSelections: true,
-    calorieRanges: [],
-    calorieBounds: [],
-    // * Connected to logged in and personalSelections:
-    healths: [],
-    cuisineTypes: [],
-    mealTypes: [],
-    timeRanges: [],
-    timeBounds: [],
-})*/
-
-
 function CreateURI(sidebarForm) {
-
 
     let uri = '';
 
@@ -44,10 +25,12 @@ function CreateURI(sidebarForm) {
     }
     if(sidebarForm.calorieBounds.length !== 0){
         sidebarForm.calorieBounds.sort();
-        uri = uri+(uri + `&calories=${sidebarForm.calorieBounds[0]}-${sidebarForm.calorieBounds[sidebarForm.calorieBounds.length-1]}`)
+        uri = uri+( `&calories=${sidebarForm.calorieBounds[0]}-${sidebarForm.calorieBounds[sidebarForm.calorieBounds.length-1]}`)
         }
+    console.log(uri)
 
     return uri;
 }
+
 
 export default CreateURI;

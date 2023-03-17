@@ -1,52 +1,56 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {GlobalContext} from "../../context/GlobalState";
+import FiltersForm from "../../forms/filterForm/FiltersForm";
+
+
+// const {user, isAuth} = useContext(AuthContext)
+const username = "Rodriguez Gonzales"
+const data = "Healths and diets"
+
+// TODO soon:
+// !! Need to check isAuth
+// ! Use username
+
+
+// TODO future:
+// Add possibility to add personal image to account
+// Add more choices for user
+
+//* 1. I don't need to do anything besides the form as adjustments have been made in FiltersForm
 
 
 
-
-/*
-At profile:
-        1. user will select for example 'balanced' and 'High Fiber'
-        2. When user does this, the value of this (?? &diet= ??) needs to be saved to
-    the array of diets here and in localStorage
-
-    Then in sidebarForm:
-    1. It needs to be checked whether personalSelection.isActivated is true
-    2. If yes, then it needs to check diets/healths if it has anything and if yes:
-        2B. Take these values and add them to the sidebarForm
-        2C. Make sure these options are now checked on display as well
-    3. If not, then an action (button) needs to trigger to set activated true
-
-    This means here I need:
-
-    A function that checks whether personalSelection.isActivated is true
-        I don't ^^ because I can just use value of ^^
-        BUT I do need a function that sets to false/true
-    A function that adds to diets and healths
-    A function that removes from diets and healths
-
-*/
-
-/*
-At sidebarform just have as onclick to the personalSelection a loop that
-loops through each array (of its length) and with each array sends its value
-to the corresponding handle*/
-
-
-
-//* 10. ? A function to check if the user has selected a personalSelection? message? Maybe can do at profile or wherever:
-// "if .. array empty then "You should try creating a personalSelection"
-// Would just be at search?
-// if personalSelection.diets.length > 0 || personalSelection.healths.length > 0 then{
-// action of the switch? } else { "You haven't select any diet or health wishes as standard. Feel free to do so at your profile" }
 
 
 
 function ProfilePage() {
+    const {personalSelection, setPersonalSelection} = useContext(GlobalContext)
+
+
     return (
         <div>
-            <h1>Profile</h1>
 
 
+            <h1>Personalize Your Experience, {username}</h1>
+            <p className='small gray'>Be aware that selecting any of the below will result in any search with pS turned on only showcasing these meals.</p>
+
+            <h2>Your Selection: </h2>
+            {(personalSelection.diets.length > 0 || personalSelection.healths.length > 0)?
+                 <p>{data}</p>
+             :
+                  <p>You have not selected any diet or health wishes as standard. Feel free to do so down below</p>
+            }
+
+            <FiltersForm
+                state={personalSelection}
+                setState={setPersonalSelection}
+                text={['Do you follow any of these diets?',
+                    'Are there any health issues/wishes?',
+                    'Do you have a favourite type of Cuisine?',
+                    'Are you planning on using this site only for specific meals?',
+                    'Is bulking season around the corner, or are you planning for the beach?' ]}
+                profile={true}
+            />
         </div>
     );
 }

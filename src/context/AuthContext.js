@@ -12,6 +12,7 @@ export const AuthContext = createContext( {} );
 function AuthContextProvider( { children } ) {
 
     //* 3. local storage key for JWT token, useState for authentication and useNavigate
+    // TODO: Connect isAuth to header to set log in/sign up or My Profile
     const storedTokenKey = 'token';
 
     const [ auth, setAuth ] = useState( {
@@ -52,7 +53,6 @@ function AuthContextProvider( { children } ) {
 
     //* 5. A login function
     function login( jwt ) {
-        console.log( "The user is logged in" )
         localStorage.setItem( 'token', jwt )
         const decodedToken = jwt_decode( jwt );
 
@@ -81,7 +81,6 @@ function AuthContextProvider( { children } ) {
             if ( redirect ) {
                 navigate( redirect )
             }
-            console.log( response )
         } catch ( e ) {
             console.error( e )
             setAuth( {
@@ -94,7 +93,6 @@ function AuthContextProvider( { children } ) {
 
     //* 7. A logout function
     function logout() {
-        console.log( "The user is logged out" )
         localStorage.removeItem( 'token' )
         setAuth( {
             ...auth,

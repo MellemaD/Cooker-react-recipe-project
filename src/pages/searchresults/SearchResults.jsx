@@ -1,28 +1,12 @@
-/*
-Pagination
-To obtain the next page, the API user should follow the “next” link from the “_links” section in the result JSON, which looks like this:
-
-"_links" : {
-    "next" : {
-        "title" : "Next page",
-            "href" : "https://api.edamam.com/api/food-database/v2/parser?..."
-    }
-}*/
-
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import SearchRecipeForm from "../../forms/SearchRecipeForm";
 import Cards from "../../containers/cards/Cards";
-import ResultsSidebarForm from "../../forms/resultsSidebarForm/ResultsSidebarForm";
+import FiltersForm from "../../forms/filterForm/FiltersForm";
 import CreateURI from "../../helpers/CreateURI";
-import createURI from "../../helpers/CreateURI";
 
 function SearchResults() {
 
-// ! Near
-    // TODO: Add the other useStates to deps-useEffect
-    // TODO: Create a helper function that will return the URI based on the state of the sideBar
-    // TODO: Check whether the user is logged in and whether he's using personalSelections
 // * Later
     // TODO: Using params, I want to update searchQuery through a functional search bar in the navbar too
     // TODO: Implement a way to set in order the results
@@ -33,25 +17,22 @@ function SearchResults() {
         // search query for taking the query from the search form
         // result data is for setting the results from API requests
         // error to toggle error and based on its state send an error page
+        // searchTrigger to trigger API requests when user presses search. This avoids excessive requests with every change in filter
     const [searchQuery, setSearchQuery] = useState('');
     const [resultData, setResultData] = useState([]);
     const [error, toggleError] = useState(false);
+    const [searchTrigger, toggleSearchTrigger] = useState(false);
 
 
     // * 4. Add the other states (sidebarForm) which get passed on to the ResultsidebarForm
     const [sidebarForm, setSidebarForm] = useState({
-        // * Connected to logged in and personalSelections:
         diets: [],
-        // ! Locked if not logged in:
-        personalSelections: true,
         calorieRanges: [],
         calorieBounds: [],
-        // * Connected to logged in and personalSelections:
         healths: [],
         cuisineTypes: [],
         mealTypes: [],
-        timeRanges: [],
-        timeBounds: [],
+
     })
 
     // * 5. Add state for the message of recipes found
@@ -59,16 +40,15 @@ function SearchResults() {
 
 
 
-    // * 6. create a helper to create the URI?
+    // * 6. create a helper to create the URI? -> CreateURI.jsx
 
 
 
 
 
         // * 3.  useEffect in which we call fetchResults based on changes of (for now) searchQuery.
-
-        // ! add to that the added States
-        useEffect(() => {
+            //and click on 'search'
+     useEffect(() => {
 
             // * 2. try/catch, await axios with api
             async function fetchResults(){
@@ -80,9 +60,7 @@ function SearchResults() {
                         // process is not defined, need to disable eslint
                         // eslint-disable-next-line no-undef
                         `https://api.edamam.com/api/recipes/v2?type=public&q=${searchQuery}&app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}${CreateURI(sidebarForm)}`)
-                    /*.then(result => {*/
                     setResultData(result.data.hits);
-                    console.log(createURI(sidebarForm))
 
 
                 // Create recipesFoundMessage to display to the user how many results were found
@@ -105,12 +83,6 @@ function SearchResults() {
                     }
 
                 }
-
-                    console.log(result);
-
-                    console.log(resultData);
-
-
             } catch(err){
                 console.error(err);
                 toggleError(true);
@@ -120,7 +92,7 @@ function SearchResults() {
         if (searchQuery){
           void fetchResults();
         }
-        }, [searchQuery, sidebarForm] )
+        }, [searchQuery, searchTrigger] )
 
 
     return (
@@ -138,14 +110,18 @@ function SearchResults() {
 
             <SearchRecipeForm
                 setQueryHandler={setSearchQuery}
+                toggleSearchTrigger={toggleSearchTrigger}
+                searchTrigger={searchTrigger}
             />
 
 
             {/*  The sidebar form:*/}
             <h4>SideBarForm</h4>
-            <ResultsSidebarForm
-                sidebarFormState={sidebarForm}
-                setSidebarFormState={setSidebarForm}
+            <FiltersForm
+                state={sidebarForm}
+                setState={setSidebarForm}
+                text={['Diet: ', 'Health:', 'Cuisine Types:', 'Meal Types:', 'Amount of Calories:' ]}
+                profile={false}
             />
 
             <h4>Amount found</h4>
@@ -153,7 +129,6 @@ function SearchResults() {
 
             {resultData.length > 0 &&
                 <Cards data={resultData} />
-
             }
         </div>
     );
