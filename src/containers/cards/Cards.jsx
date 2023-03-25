@@ -6,26 +6,30 @@ import React, {useContext} from 'react';
 import {AiOutlineHeart, AiFillHeart} from "react-icons/ai";
 import {RiHeartAddLine} from "react-icons/ri";
 import {FaHeartBroken} from "react-icons/fa";
-// import {AuthContext} from "../../context/AuthContext";
 import {GlobalContext} from "../../context/GlobalState";
+import {AuthContext} from "../../context/AuthContext";
+import {useNavigate} from "react-router-dom";
 
-{/* TODO: Check if user is logged in, if not, heart doesn't work */}
+
 
 // eslint-disable-next-line react/prop-types
 function Cards({data}) {
 
 
 
-    // const [error, toggleError] = useState(false);
-    // const {isAuth} = useContext(AuthContext);
-    // const isAuth = useContext( AuthContext )
+    const {isAuth} = useContext(AuthContext)
     const {addFavourite,
         deleteFavourite,
         isFavourite, favourites} = useContext(GlobalContext)
 
+    const navigate = useNavigate();
+
+    const handleNavigate = () => {
+        navigate('/authenticate')
+    }
+
     const handleSetFavourite = (event, recipe) => {
         event.preventDefault();
-        // if (isAuth){
             if(!isFavourite(recipe.label)){
                 addFavourite(recipe.label,
                     recipe.label,
@@ -41,10 +45,6 @@ function Cards({data}) {
                 console.log(favourites);
                 return ''
             }
-        // } else {
-        //     // ! Need timer on error message
-        //     toggleError(true)
-        // }
     }
 
     return (
@@ -68,11 +68,13 @@ function Cards({data}) {
                                     <span>...</span>
                                 </div>
                             </a>
+                            <div>
                                 <button
-                                    onClick={(event) => handleSetFavourite(event, item.recipe)}
-                                    className='top-right'>
+                                    onClick={(event) =>
+                                    {isAuth ? handleSetFavourite(event, item.recipe):
+                                    handleNavigate()}}
+                                    className='heart'>
                                      <span>
-                                        {/* TODO: Check if user is logged in, if not, heart doesn't work */}
                                         {isFavourite(item.recipe.label) ? <AiFillHeart/> : <AiOutlineHeart/>}
                                     </span>
 
@@ -85,10 +87,8 @@ function Cards({data}) {
                                 <a href={item.recipe.url} target='_blank' rel="noreferrer">
 
                                 <h2>{item.recipe.label}</h2>
-                            </a>
-                            {/*{error &&*/}
-                            {/*    <span>You need to be logged in to add to favourites</span>*/}
-                            {/*}*/}
+                                </a>
+                            </div>
                         </div>
                     )
                 })}

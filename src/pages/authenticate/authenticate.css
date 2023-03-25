@@ -1,0 +1,97 @@
+.outer-container{
+   display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem .5rem;
+    min-height: 60vh;
+    align-items: center;
+}
+
+.authenticate-section {
+    width: 110%;
+    max-width: 440px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+    background-color: white;
+}
+
+.authenticate-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+}
+
+.authenticate-section input,
+.authenticate-section button,
+.authenticate-section textarea {
+    font-family: 'Nunito', sans-serif;
+    font-size: 22px;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+}
+
+.authenticate-section label,
+.authenticate-section button {
+    margin-top: 1rem;
+}
+
+.authenticate-section button {
+    padding: 0.5rem;
+    background-color: #3D8361;
+    color: #fff;
+}
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #000;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
+
+.instructions > svg {
+    margin-right: 0.25rem;
+}
+
+.valid {
+    color: limegreen;
+    margin-left: 0.25rem;
+}
+
+.invalid {
+    color: red;
+    margin-left: 0.25rem;
+}
+
+.err-msg {
+    color: #e31130;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.redirect{
+    display: flex;
+    font-size: 0.8rem;
+    color: #5E5E5E;
+    gap: 8px;
+    padding-bottom: 8px;
+}
+.redirect span{
+    cursor: pointer;
+}
+
+.redirect span li{
+    list-style: none;
+}
+
+link.visited{
+    color: #000000;
+}

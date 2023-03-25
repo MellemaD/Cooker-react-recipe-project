@@ -29,7 +29,6 @@ function Header() {
 }
 
 
-// No styled components here, only in components
 const Img = styled.img`
   width: 100%;
   height: 750px;

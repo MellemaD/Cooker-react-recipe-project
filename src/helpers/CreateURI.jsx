@@ -26,6 +26,7 @@ function CreateURI(sidebarForm) {
     if(sidebarForm.calorieBounds.length !== 0){
         sidebarForm.calorieBounds.sort();
         uri = uri+( `&calories=${sidebarForm.calorieBounds[0]}-${sidebarForm.calorieBounds[sidebarForm.calorieBounds.length-1]}`)
+        console.log(sidebarForm.calorieBounds)
         }
     console.log(uri)
 

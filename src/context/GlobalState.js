@@ -120,14 +120,14 @@ export const GlobalProvider = (props) => {
         localStorage.setItem(localStoragePersonalSelection, JSON.stringify(newPersonalSelection));
     }
 
-    //* 9. A function to check if personalSelection is empty (less code at required spots)
-    function isPersonalSelectionEmpty(personalSelection){
-        return personalSelection.diets.length === 0 &&
+    //* 9. A value to check if personalSelection is empty (less code at required spots)
+    const isPersonalSelectionEmpty = (
+            personalSelection.diets.length === 0 &&
             personalSelection.healths.length === 0 &&
             personalSelection.calorieBounds.length === 0 &&
             personalSelection.cuisineTypes.length === 0 &&
-            personalSelection.mealTypes.length === 0;
-    }
+            personalSelection.mealTypes.length === 0
+    )
 
 
 

@@ -1,16 +1,8 @@
 import React, {useContext} from 'react';
 import {GlobalContext} from "../../context/GlobalState";
 import FiltersForm from "../../forms/filterForm/FiltersForm";
-
-
-// const {user, isAuth} = useContext(AuthContext)
-const username = "Rodriguez Gonzales"
-const data = "Healths and diets"
-
-// TODO soon:
-// !! Need to check isAuth
-// ! Use username
-
+import './profilePage.css'
+import {AuthContext} from "../../context/AuthContext";
 
 // TODO future:
 // Add possibility to add personal image to account
@@ -24,33 +16,38 @@ const data = "Healths and diets"
 
 
 function ProfilePage() {
-    const {personalSelection, setPersonalSelection} = useContext(GlobalContext)
+    const {personalSelection, setPersonalSelection, isPersonalSelectionEmpty} = useContext(GlobalContext)
+    const {isAuth, user} = useContext(AuthContext)
+
+
 
 
     return (
         <div>
+            { isAuth ?
+            <div className='outer-container-profile'>
 
 
-            <h1>Personalize Your Experience, {username}</h1>
-            <p className='small gray'>Be aware that selecting any of the below will result in any search with pS turned on only showcasing these meals.</p>
+                <h1>Personalize Your Experience, <span>{user.username}</span></h1>
+                <p>Any saved preferences here will affect your search results if this option is turned on.</p>
 
-            <h2>Your Selection: </h2>
-            {(personalSelection.diets.length > 0 || personalSelection.healths.length > 0)?
-                 <p>{data}</p>
-             :
-                  <p>You have not selected any diet or health wishes as standard. Feel free to do so down below</p>
-            }
+                <h2>Your Selection: </h2>
+                {isPersonalSelectionEmpty && <p>You have not selected any diet or health wishes as standard. Feel free to do so down below.</p>
+                }
 
-            <FiltersForm
-                state={personalSelection}
-                setState={setPersonalSelection}
-                text={['Do you follow any of these diets?',
-                    'Are there any health issues/wishes?',
-                    'Do you have a favourite type of Cuisine?',
-                    'Are you planning on using this site only for specific meals?',
-                    'Is bulking season around the corner, or are you planning for the beach?' ]}
-                profile={true}
-            />
+
+                <FiltersForm
+                    state={personalSelection}
+                    setState={setPersonalSelection}
+                    text={['Do you follow any of these diets?',
+                        'Are there any health issues/wishes?',
+                        'Do you have a favourite type of Cuisine?',
+                        'Are you planning on using this site only for specific meals?',
+                        'Is bulking season around the corner, or are you planning for the beach?' ]}
+                    profile={true}
+                />
+            </div> :
+            <p>You should be logged in to make use of the profile page!</p>}
         </div>
     );
 }

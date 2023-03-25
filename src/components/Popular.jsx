@@ -21,7 +21,7 @@ function Popular() {
         try {
 
             // * 3. Add a check that gets localStorage
-                // Local storage to avoid using to many API requests
+                // Local storage to avoid using too many API requests
             const check = localStorage.getItem("popular");
 
                 // If check has a value, we turn that into an array
@@ -33,9 +33,6 @@ function Popular() {
             // * 4. If localStorage is empty, API request follows
                 // eslint-disable-next-line no-undef
                 const response = await axios.get(`https://api.edamam.com/api/recipes/v2?type=public&q=popular&app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}&imageSize=REGULAR`);
-                console.log(response.data);
-
-                // ! add functionality to filter out recipes without image
                 setPopular(response.data.hits.slice(0, 6));
 
             // * 5. Set localStorage as results, stringified
@@ -46,10 +43,8 @@ function Popular() {
 
         }
         catch(err){
-            console.error(err);
             toggleError(true);
         }
-        console.log(popular.data);
 
     }
 

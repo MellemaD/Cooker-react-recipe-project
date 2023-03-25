@@ -5,12 +5,9 @@ import {BsFillPersonFill} from "react-icons/bs";
 import {AiFillHome} from "react-icons/ai";
 import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
+import './authenticate.css'
 
-
-const LOGIN_URL = '/api/auth/signin';
-const BASE_URL = 'https://frontend-educational-backend.herokuapp.com';
-
-function Authenticate() {
+function LogIn() {
 
     //* 4. Create useContext + AuthContext to be able to use the login function
 
@@ -30,9 +27,7 @@ function Authenticate() {
     const [success, setSuccess] = useState(false);
 
     // * 2. Create useEffects
-        // To set focus upon mounting, so deps will be an empty array
-
-        // To empty out error message when user is changing user or password
+     // To empty out error message when user is changing user or password
     useEffect(() => {
         setErrMsg('');
     }, [user, pwd])
@@ -40,15 +35,14 @@ function Authenticate() {
     // * 3. Create handleSubmit which handles the submit event basic
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-
+        setErrMsg('');
         try{
 
-            const response = await axios.post(`${BASE_URL + LOGIN_URL}`, {
-                "username": user,
-                "password" : pwd,
+            const response = await axios.post(`https://frontend-educational-backend.herokuapp.com/api/auth/signin`, {
+                username: user,
+                password: pwd,
             });
-            console.log(JSON.stringify(response));
+            login(response.data.accessToken)
 
         setUser('');
         setPwd('');
@@ -72,28 +66,29 @@ function Authenticate() {
     }
 
     return (
-        <>
+        <div className='outer-container'>
             {success ? (
-                <section>
+                <section className='authenticate-section'>
                     <h1>You are logged in!</h1>
                     <br />
                     <p>
-                        <navLink to='/'><i><AiFillHome/></i>Home</navLink>
+                        <NavLink to='/'><i><AiFillHome/></i> Take Me Home!</NavLink>
                     </p>
                 </section>
             ): (
 
 
-            <section>
+            <section className='authenticate-section'>
                 {errMsg &&
                 <p ref={errRef}
                     aria-live='assertive'
                 >
                     {errMsg}
                 </p>}
-                <h1>Sign in</h1>
 
-                <form onSubmit={handleSubmit}>
+                <h1>Good to see you again!</h1>
+
+                <form className='authenticate-form' onSubmit={handleSubmit}>
                     <label htmlFor='username'>Username:</label>
                     <input
                         type="text"
@@ -117,14 +112,14 @@ function Authenticate() {
                     <button>Log in</button>
                 </form>
 
-                <p>
+                <p className='redirect'>
                     Need an account?
                 <span><NavLink to='/register'><i> <BsFillPersonFill/> </i>Sign up here!</NavLink></span>
                 </p>
             </section>
             )}
-        </>
+        </div>
     );
 }
 
-export default Authenticate;
+export default LogIn;

@@ -1,0 +1,32 @@
+.outer-container-empty{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem .5rem;
+    align-items: center;
+}
+
+.outer-container-saved h2{
+    padding: 5px;
+}
+
+.fave {
+    max-width: 700px;
+    max-height: 50%;
+    align-items: center;
+    position: relative;
+    text-align: center;
+
+}
+
+.fave img{
+    width: 100%;
+    max-width: 500px;
+    align-self: center;
+}
+
+.fave .position {
+    position: absolute;
+    bottom: 40px;
+    left: 150px;
+}

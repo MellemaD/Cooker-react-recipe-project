@@ -1,0 +1,10 @@
+.center-top,
+.center-top h3{
+    text-align: center;
+}
+
+.container-search{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-gap: 20px;
+}

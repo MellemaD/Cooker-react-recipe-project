@@ -6,15 +6,21 @@ import {BsFillPersonFill} from "react-icons/bs";
 import {AiFillHeart} from "react-icons/ai";
 import {FaBars, FaSearch, FaTimes} from "react-icons/fa";
 import SearchBar from "../../components/SearchBar";
+import {useContext} from "react";
+import {AuthContext} from "../../context/AuthContext";
 
 function NavBar() {
 
-    // TODO: Create a function that checks whether the user is logged in or not
-    // ! Check if user is logged in
-    let loggedIn = true;
+
+    const {isAuth, logout} = useContext(AuthContext)
 
     const navigate = useNavigate();
 
+    function handleLogout(){
+        if (isAuth){
+            logout();
+        }
+    }
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -32,9 +38,14 @@ function NavBar() {
                     <span ><i><FaSearch onClick={submitHandler}/></i> </span>
                 </div>
                 <ul>
-                    <li><NavLink to= {loggedIn ? '/profile' : '/authenticate'}><i> <BsFillPersonFill/> </i>{loggedIn ? 'My Profile' : 'Log in/Sign up'}</NavLink></li>
-                    <li><NavLink to={loggedIn ? '/favorite' : '/authenticate'}><i><AiFillHeart/></i> Favorites</NavLink></li>
-                    <li><NavLink to='/themes'>3</NavLink></li>
+                    <li><NavLink to= {isAuth ? '/profile' : '/authenticate'}><i> <BsFillPersonFill/> </i>{isAuth ? 'My Profile' : 'Log in/Sign up'}</NavLink></li>
+                    <li><NavLink to={isAuth ? '/favorite' : '/authenticate'}><i><AiFillHeart/></i> Favorites</NavLink></li>
+                    {isAuth &&
+                        <li><NavLink
+                            onClick={(event => {handleLogout(event)})}
+                            to='/authenticate'>Log Out</NavLink>
+                        </li>
+                    }
                 </ul>
                 <label htmlFor='check' className='bar'>
                     <span id='bars' ><i><FaBars/></i> </span>
