@@ -2,18 +2,15 @@ import React, {useEffect, useRef, useState} from 'react';
 import {FaCheck, FaInfoCircle, FaTimes} from "react-icons/fa";
 import {NavLink} from "react-router-dom";
 import axios from "axios";
+import './authenticate.css'
+import {BsFillPersonFill} from "react-icons/bs";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{5,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
-// ! const REGISTER_URL = '/register';
-// const baseUrl = 'https://frontend-educational-backend.herokuapp.com'
 
 const Register = () => {
 
-    // value={user} Could use value attribue here to input elements
-    // Handy for clearing inputs upon submitting
-    // Not necessary here, deffo with login
 
     const userRef = useRef();
     const errRef = useRef();
@@ -70,7 +67,6 @@ const Register = () => {
             return;
         }
         try{
-            console.log(user, pwd)
             const response = await axios.post(
                 `https://frontend-educational-backend.herokuapp.com/api/auth/signup`,
                     {'username': user,
@@ -80,10 +76,8 @@ const Register = () => {
 
             console.log(response)
             setSuccess(true);
-            // ! Clear input fields (?)
 
         } catch(err){
-            console.error(err)
             if(!err?.response){
                 setErrMsg('No Server Response');
             } else if(err.response?.status === 400){
@@ -95,36 +89,35 @@ const Register = () => {
     }
 
     return (
-        <>
+        <div className='outer-container'>
             {success ?
-                (<section>
+                (<section className='authenticate-section'>
                     <h1>Success!</h1>
                     <p>
-                        <span>Link to wherever </span>
-                    </p>
+                        <NavLink to='/authenticate'><i><BsFillPersonFill/></i> Sign in now!</NavLink>                    </p>
                 </section>
                 ) :
                 (
-            <section>
+            <section className='authenticate-section'>
                 {errMsg &&
                     <p
                        ref={errRef}
-                       className='err-msg'
-                       aria-live='assertive' /* helps with screenreader */ >
+                       className='err-msg'>
                         {errMsg}
                     </p>
                 }
-                <form onSubmit={handleSubmit}>
+                <h1>Create an account</h1>
+                <form className='authenticate-form' onSubmit={handleSubmit}>
                     <label htmlFor='username'>
                         Username:
                         <span>
                             {validName && userFocus &&
-                            <FaCheck/>
+                            <FaCheck className='valid'/>
                             }
                         </span>
                         <span>
                             {!validName && user &&
-                            <FaTimes/>
+                            <FaTimes className='invalid' />
                             }
                         </span>
                     </label>
@@ -142,7 +135,7 @@ const Register = () => {
                         onBlur={() => setUserFocus(false)}
                     />
                     {userFocus && user && !validName &&
-                        <p id='uidnote'>
+                        <p id='uidnote' className='instructions'>
                             <FaInfoCircle/>
                             6 to 24 characters. <br />
                             Must begin with a letter. <br />
@@ -153,12 +146,12 @@ const Register = () => {
                         Email:
                         <span>
                         {validEmail && email &&
-                            <FaCheck/>
+                            <FaCheck className='valid'/>
                         }
                     </span>
                         <span>
                         {!validEmail && email &&
-                            <FaTimes/>
+                            <FaTimes className='invalid'/>
                         }
                     </span>
                     </label>
@@ -174,25 +167,22 @@ const Register = () => {
                         onBlur={() => setEmailFocus(false)}
                     />
                     {emailFocus  && !validEmail &&
-                        <p id='eidnote'>
+                        <p id='eidnote' className='instructions'>
                             <FaInfoCircle/>
                             Must be a valid email.
                         </p>
                     }
 
-
-
-
                     <label htmlFor='password'>
                         Password:
                         <span>
                             {validPwd && pwdFocus &&
-                                <FaCheck/>
+                                <FaCheck className='valid' />
                             }
                         </span>
                         <span>
                             {!validPwd && pwd &&
-                                <FaTimes/>
+                                <FaTimes className='invalid'/>
                             }
                         </span>
                     </label>
@@ -208,7 +198,7 @@ const Register = () => {
                         onBlur={() => setPwdFocus(false)}
                     />
                     {pwdFocus  && !validPwd &&
-                        <p id='pwdnote'>
+                        <p id='pwdnote' className='instructions'>
                             <FaInfoCircle/>
                             8 to 24 characters. <br />
                             Must include uppercase and lowercase letters, a number and a special character <br />
@@ -220,10 +210,10 @@ const Register = () => {
                         Confirm Password:
 
                         {validMatch && matchPwd && pwdFocus &&
-                            <span><FaCheck/></span>
+                            <span><FaCheck className='valid' /></span>
                         }
                         {!validMatch && matchPwd &&
-                            <span><FaTimes/></span>
+                            <span><FaTimes className='invalid' /></span>
                         }
 
                         <input
@@ -237,7 +227,7 @@ const Register = () => {
                             onBlur={() => setMatchFocus(false)}
                         />
                         { matchFocus && !validMatch &&
-                            <p id='confirmnote'>
+                            <p id='confirmnote' className='instructions'>
                                 Must match the first password input field.
                             </p>
                         }
@@ -247,7 +237,7 @@ const Register = () => {
                         Sign up!
                     </button>
                 </form>
-                <p>
+                <p className='redirect'>
                     Already have an account? <br />
                     <span>
                         <li><NavLink to= '/authenticate'>Log in here!</NavLink></li>
@@ -255,7 +245,7 @@ const Register = () => {
                 </p>
 
             </section>)}
-        </>
+        </div>
     );
 }
 

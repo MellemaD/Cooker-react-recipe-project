@@ -1,28 +1,35 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {BsFacebook, BsGithub, BsInstagram, BsLinkedin} from "react-icons/bs";
 import  './footer.css'
+import {NavLink} from "react-router-dom";
+import {AuthContext} from "../../context/AuthContext";
 
 function Footer() {
 
-    // TODO: Create a link to Github
-    // TODO: Think of a link for 3rd li
-    // TODO: Have Random recipes lead to a search request for random recipes
-    // TODO: Personal note
+    const {logout, isAuth} = useContext(AuthContext)
+
+    function handleLogout(){
+        if (isAuth){
+            logout();
+        }
+    }
 
     return (
         <footer className='footer'>
-            <div className="container">
+            <div className="footer-container">
                 <div className="row">
                     <div className="footer-col">
                         <h4>Navigate To</h4>
                             <ul>
-                                <li><a href='#'>Authentication</a></li>
-                                <li><a href='#'>My favorites </a></li>
-                                <li><a href='#'>??</a></li>
-                                <li><a href='#'>Random recipes</a></li>
+                                <li><NavLink to= {isAuth ? '/profile' : '/authenticate'}>{isAuth ? 'My Profile' : 'Log in/Sign up'}</NavLink></li>
+                                <li><NavLink to={isAuth ? '/favorite' : '/authenticate'}>My Favorites</NavLink></li>
+                                {isAuth &&
+                                    <li><NavLink onClick={(event => {handleLogout(event)})}
+                                                 to='/authenticate'>Log Out</NavLink></li>
+                                }
                             </ul>
                     </div>
-                    <div className="footer-col">
+                    <div className="footer-col note">
                         <h4>A Personal Note</h4>
                         <p>Thank you for visiting and using my website. I hope you find many delicious meals to satiate your hunger</p>
                     </div>

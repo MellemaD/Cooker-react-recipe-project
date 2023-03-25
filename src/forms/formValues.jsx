@@ -71,7 +71,7 @@
             value: '800+',
             display: '800+',
             displayWord: 'Bulk It Up!',
-            bounds: { min: 800, max: 5000 },
+            bounds: { min: 800, max: 9000 },
         },
 
     ];

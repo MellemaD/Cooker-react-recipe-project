@@ -1,0 +1,21 @@
+.outer-container-profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem .5rem;
+    align-items: center;
+}
+
+.outer-container-profile  p:nth-of-type(1){
+    font-style: italic;
+    font-size: 0.9rem;
+}
+.outer-container-profile  p:nth-of-type(2){
+    font-size: 0.8rem;
+    color: #e83030;
+}
+
+.outer-container-profile h1 span{
+    color: #5E5E5E;
+
+}

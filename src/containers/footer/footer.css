@@ -3,7 +3,7 @@
     padding: 70px 0;
 }
 
-.container{
+.footer-container{
     max-width: 1170px;
     margin: auto;
 }
@@ -13,12 +13,16 @@ ul{
 
 .row{
     display: flex;
+    justify-content: space-evenly;
     flex-wrap: wrap;
 }
 .footer-col{
     width: 25%;
     padding: 0 15px;
+    background-color: rgba(217, 217, 217, 20%);
 }
+
+
 .footer-col h4{
     font-size: 18px;
     color: #fff;
@@ -70,14 +74,4 @@ ul{
     background-color: #fff;
 }
 
-@media screen and (max-width: 767px){
-    .footer-col{
-        width: 50%;
-        margin-bottom: 30px;
-    }
-}
-@media screen and (max-width: 574px){
-    .footer-col{
-        width: 100%;
-    }
-}
+

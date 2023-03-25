@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
+import {FaSearch} from "react-icons/fa";
 
 
 
@@ -26,13 +27,14 @@ function SearchRecipeForm ({setQueryHandler, toggleSearchTrigger, searchTrigger}
                 onChange={(e) => setSearchFormState(e.target.value)}
             />
 
-            <button
+            <ButtonStyle
                 type="submit">
-                Search
-            </button>
+                <i><FaSearch/></i>
+            </ButtonStyle>
         </form>
     )
 }
+
 
 
 
@@ -45,6 +47,26 @@ const InputStyle = styled.input`
     padding: 0 10px;
     font-size: 20px;
     width: 350px;
+`
+const ButtonStyle = styled.button`
+    border: none;
+    padding: 2px 3px;
+    font-size: 1.1rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+    color: #0a5071;
+    background-color: #fff;
+
+
+
+  :hover{
+    cursor: pointer;
+    color: #fff;
+    background: #888888;
+    transition: 0.5s;
+
+
+
+  }
 `
 
 export default SearchRecipeForm;

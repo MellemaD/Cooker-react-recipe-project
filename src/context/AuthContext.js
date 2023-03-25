@@ -12,13 +12,12 @@ export const AuthContext = createContext( {} );
 function AuthContextProvider( { children } ) {
 
     //* 3. local storage key for JWT token, useState for authentication and useNavigate
-    // TODO: Connect isAuth to header to set log in/sign up or My Profile
     const storedTokenKey = 'token';
 
     const [ auth, setAuth ] = useState( {
         isAuth: false,
         user: null,
-        status: "pending"
+        status: "pending",
     } );
     const navigate = useNavigate()
 
@@ -34,11 +33,9 @@ function AuthContextProvider( { children } ) {
 
             // calculation if token hasn't expired yet
             if ( Math.floor( Date.now() / 1000 ) < decodedToken.exp ) {
-                console.log( "The user is still logged in" )
                 void fetchUserData( storedToken, decodedToken.sub )
             } else  {
                 // If so, remove token
-                console.log( "The token has expired" )
                 localStorage.removeItem( 'token' )
             }
         } else {
@@ -62,22 +59,22 @@ function AuthContextProvider( { children } ) {
     //* 6. An async function that fetches the user data
     async function fetchUserData( jwt, id, redirect ) {
         try {
-            const response = await axios.get( `http://localhost:3000/600/users/${ id }`, {
+            const response = await axios.get( `https://frontend-educational-backend.herokuapp.com/api/user `, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${ jwt }`,
                 }
             } )
-            setAuth( {
+            setAuth(  {
                 ...auth,
                 isAuth: true,
                 user: {
                     email: response.data.email,
-                    id: response.data.id,
                     username: response.data.username
                 },
-                status: "done"
-            } )
+                status: "done",
+            });
+
             if ( redirect ) {
                 navigate( redirect )
             }

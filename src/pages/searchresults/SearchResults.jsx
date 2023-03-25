@@ -4,6 +4,7 @@ import SearchRecipeForm from "../../forms/SearchRecipeForm";
 import Cards from "../../containers/cards/Cards";
 import FiltersForm from "../../forms/filterForm/FiltersForm";
 import CreateURI from "../../helpers/CreateURI";
+import './searchResults.css'
 
 function SearchResults() {
 
@@ -99,37 +100,47 @@ function SearchResults() {
 
 
         <div>
+            <div className='center-top'>
 
-            <h3>Search Results</h3>
+                <h3>Search Results</h3>
 
-            {/* error message*/}
-            {error &&
-                <span>
-                    Oops, the search was unsuccessful
-            </span>}
+                {/* error message*/}
+                {error &&
+                    <span>
+                        Oops, the search was unsuccessful
+                </span>}
 
-            <SearchRecipeForm
-                setQueryHandler={setSearchQuery}
-                toggleSearchTrigger={toggleSearchTrigger}
-                searchTrigger={searchTrigger}
-            />
+                <SearchRecipeForm
+                    setQueryHandler={setSearchQuery}
+                    toggleSearchTrigger={toggleSearchTrigger}
+                    searchTrigger={searchTrigger}
+                />
+            </div>
 
 
             {/*  The sidebar form:*/}
-            <h4>SideBarForm</h4>
-            <FiltersForm
-                state={sidebarForm}
-                setState={setSidebarForm}
-                text={['Diet: ', 'Health:', 'Cuisine Types:', 'Meal Types:', 'Amount of Calories:' ]}
-                profile={false}
-            />
+            <div className='container-search'>
 
-            <h4>Amount found</h4>
-            <div>{recipesFoundMessage}</div>
+                <div className=''>
+                    <h4>Filters:</h4>
+                    <p>Press search after selecting filters!</p>
+                    <FiltersForm
+                        state={sidebarForm}
+                        setState={setSidebarForm}
+                        text={['Diet: ', 'Health:', 'Cuisine Types:', 'Meal Types:', 'Amount of Calories:' ]}
+                        profile={false}
+                    />
+                    <h4>Amount found</h4>
+                    <div>{recipesFoundMessage}</div>
+                </div>
 
-            {resultData.length > 0 &&
-                <Cards data={resultData} />
-            }
+                <div>
+                    {resultData.length > 0 &&
+                        <Cards
+                            data={resultData} />
+                    }
+                </div>
+            </div>
         </div>
     );
 }

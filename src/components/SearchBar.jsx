@@ -5,11 +5,10 @@ import styled from "styled-components";
 // eslint-disable-next-line react/prop-types
 function SearchBar({submitHandler})  {
 
-    // TODO: Make it functional together with filters in resultPage
 
 
     return (
-        <form/* onSubmit={submitHandler}*/>
+        <form>
                 <ButtonStyle
                     type="button"
                     name='search'

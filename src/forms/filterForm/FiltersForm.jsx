@@ -22,11 +22,6 @@ function FiltersForm({    state,
 
 
     // * 2. Create handle functions to make changes to the states
-
-       // ! TODO: Check if user is logged in
-
-    //  TODO: Check if theory below checks out or can be solved
-
     const handlePersonalSelection = (checked) => {
         setPersonalSelection((prevState) => {
             const newState = {
@@ -214,36 +209,34 @@ function FiltersForm({    state,
 
 
     return (
-    <div>
+    <div className={profile ? 'inner-container-profile' : 'container-results'} >
 
             {/* Part 1: Personal Selection */}
         {// if this is profile, it won't need the option for Personal Selection
             !profile &&
-            <div>
+            <div className='filter-search switch'>
                 <label>
-                    <span>Use Your Personal Selection:</span>
+                    <h3>Use Your Personal Selection:</h3>
                     <ReactSwitch
                         checked={personalSelection.isActivated}
                         onChange={(checked) => handlePersonalSelection(checked)}
-                        disabled={isAuth}
+                        disabled={!isAuth}
                     />
                 </label>
 
-                {/* TODO: */}
-
-                {(isAuth && isPersonalSelectionEmpty) &&  <span>
+                {(isAuth && isPersonalSelectionEmpty) &&  <p className='auth-ps'>
                     You do not have a personal selection yet. Go to your profile to create one!
-                </span>}
-                {!isAuth && <span className='hide until hover?'>
+                </p>}
+                {!isAuth && <p className='auth-ps'>
                     You cannot make use of a personal selection without an account.
                     Try to log in or register if you do not have an account yet
-                </span>}
+                </p>}
 
             </div>
         }
 
             {/* Part 2: Diet */}
-        <div>
+        <div className={profile ? 'selection' : 'filter-search'}>
             <h3>
                 {/* as the text differs from profile page, this will give the correct text */}
                 {text[0]}
@@ -280,7 +273,7 @@ function FiltersForm({    state,
         </div>
 
             {/* Part 3: Health: */}
-        <div>
+        <div className={profile ? 'selection' : 'filter-search'}>
             <h3>
                 {text[1]}
             </h3>
@@ -312,7 +305,7 @@ function FiltersForm({    state,
         </div>
 
             {/* Part 4: Type of Cuisine: */}
-        <div>
+        <div className={profile ? 'selection' : 'filter-search'}>
             <h3>
                 {text[2]}
             </h3>
@@ -345,7 +338,7 @@ function FiltersForm({    state,
 
 
             {/* Part 5: Type of Meal: */}
-        <div>
+        <div className={profile ? 'selection' : 'filter-search'}>
             <h3>
                 {text[3]}
             </h3>
@@ -378,7 +371,7 @@ function FiltersForm({    state,
 
 
             {/* Part 6: Amount of Calories: */}
-            <div>
+            <div className={profile ? 'selection' : 'filter-search'}>
                 <h3>
                     {text[4]}
                 </h3>
