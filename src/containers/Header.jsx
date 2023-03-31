@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from "./navbar/NavBar";
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
-import headerImg from '../assets/pexels-klaus-nielsen-6287486.jpg'
+import headerImg from '../assets/homepageImage.jpg'
 
 function Header() {
     // Header use useLocation to determine whether the user is on the homepage or not
