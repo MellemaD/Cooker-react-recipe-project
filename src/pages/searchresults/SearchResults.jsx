@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import SearchRecipeForm from "../../forms/SearchRecipeForm";
-import Cards from "../../containers/cards/Cards";
-import FiltersForm from "../../forms/filterForm/FiltersForm";
+import Cards from "../../components/cards/Cards";
+import FiltersForm from "../../components/filterForm/FiltersForm";
 import CreateURI from "../../helpers/CreateURI";
 import './searchResults.css'
 
@@ -45,8 +45,6 @@ function SearchResults() {
 
 
 
-
-
         // * 3.  useEffect in which we call fetchResults based on changes of (for now) searchQuery.
             //and click on 'search'
      useEffect(() => {
@@ -54,6 +52,7 @@ function SearchResults() {
             // * 2. try/catch, await axios with api
             async function fetchResults(){
                 toggleError(false);
+                console.log(searchQuery);
 
                 try{
                     // eslint-disable-next-line no-unused-vars
@@ -68,7 +67,7 @@ function SearchResults() {
                  setRecipesFoundMessage(`Found ${result.data.count} Recipes`)
                 switch(result.data.count) {
                     case 0: {
-                        setRecipesFoundMessage('No recipes found');
+                        setRecipesFoundMessage('No recipes found, try to alter your filters');
                         break;
                     }
                     case 1: {
@@ -93,6 +92,9 @@ function SearchResults() {
         if (searchQuery){
           void fetchResults();
         }
+        else{
+            setRecipesFoundMessage('Type something down below:');
+        }
         }, [searchQuery, searchTrigger] )
 
 
@@ -102,7 +104,8 @@ function SearchResults() {
         <div>
             <div className='center-top'>
 
-                <h3>Search Results</h3>
+                <h4>Amount found</h4>
+                <div>{recipesFoundMessage}</div>
 
                 {/* error message*/}
                 {error &&

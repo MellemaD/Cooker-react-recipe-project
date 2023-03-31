@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {GlobalContext} from "../../context/GlobalState";
-import Cards from "../../containers/cards/Cards";
+import Cards from "../../components/cards/Cards";
 import hungryImg from '../../assets/hungry.png'
 import './favoriteList.css'
 import {AuthContext} from "../../context/AuthContext";
@@ -12,8 +12,6 @@ import {AuthContext} from "../../context/AuthContext";
 function FavoriteList() {
     const {favourites} = useContext(GlobalContext)
     const {isAuth} = useContext(AuthContext)
-
-
 
     return (
         <div>

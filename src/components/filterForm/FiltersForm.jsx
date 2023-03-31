@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React  from 'react';
 import './filtersForm.css'
-import {calorieAmountRangesOptions, cuisineTypes, diets, healths, mealTypes} from "../formValues";
+import {calorieAmountRangesOptions, cuisineTypes, diets, healths, mealTypes} from "../../forms/formValues";
 import {useContext} from "react";
 import {GlobalContext} from "../../context/GlobalState";
 import {AuthContext} from "../../context/AuthContext";

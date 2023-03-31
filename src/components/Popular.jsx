@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import Cards from "../containers/cards/Cards";
+import Cards from "./cards/Cards";
+import styled from "styled-components";
 
 function Popular() {
 
@@ -53,7 +54,7 @@ function Popular() {
 
 
     return (
-        <div>
+        <Div>
             {/* error message*/}
             {error &&
                 <span>
@@ -64,9 +65,13 @@ function Popular() {
             <Cards data={popular}/>
 
 
-        </div>
+        </Div>
     );
 
 }
+
+const Div = styled.div`
+  text-align: center;
+`
 
 export default Popular;

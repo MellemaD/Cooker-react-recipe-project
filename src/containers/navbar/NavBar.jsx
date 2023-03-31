@@ -39,7 +39,7 @@ function NavBar() {
                 </div>
                 <ul>
                     <li><NavLink to= {isAuth ? '/profile' : '/authenticate'}><i> <BsFillPersonFill/> </i>{isAuth ? 'My Profile' : 'Log in/Sign up'}</NavLink></li>
-                    <li><NavLink to={isAuth ? '/favorite' : '/authenticate'}><i><AiFillHeart/></i> Favorites</NavLink></li>
+                    <li><NavLink to={isAuth ? '/favorite' : '/error/unauthorized'}><i><AiFillHeart/></i> Favorites</NavLink></li>
                     {isAuth &&
                         <li><NavLink
                             onClick={(event => {handleLogout(event)})}

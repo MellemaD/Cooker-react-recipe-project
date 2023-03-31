@@ -8,6 +8,7 @@ import SearchResults from "./searchresults/SearchResults";
 import FavoriteList from "./favoritelist/FavoriteList";
 import LogIn from "./authenticate/LogIn";
 import Register from "./authenticate/Register";
+import Error from "./error/Error";
 
 function Pages() {
     const location = useLocation();
@@ -21,6 +22,7 @@ function Pages() {
                 <Route path="/favorite" element={<FavoriteList/>} />
                 <Route path="/profile" element={<ProfilePage/>} />
                 <Route path="/results/" element={<SearchResults/>} />
+                <Route path="/error/:type" element={<Error/>} />
             </Routes>
         </>
     );

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {GlobalContext} from "../../context/GlobalState";
-import FiltersForm from "../../forms/filterForm/FiltersForm";
+import FiltersForm from "../../components/filterForm/FiltersForm";
 import './profilePage.css'
 import {AuthContext} from "../../context/AuthContext";
 

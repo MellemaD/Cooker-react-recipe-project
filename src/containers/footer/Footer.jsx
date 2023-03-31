@@ -36,12 +36,14 @@ function Footer() {
                     <div className="footer-col">
                         <h4>Social Media</h4>
                             <div className='social-links'>
-                                <li><a href='https://github.com/MellemaD/Cooker-react-recipe-project' target='_blank' rel="noreferrer"><i><BsGithub/></i></a></li>
+                                <ul>
+                                    <li><a href='https://github.com/MellemaD/Cooker-react-recipe-project' target='_blank' rel="noreferrer"><i><BsGithub/></i></a></li>
 
-                                {/*Following links don't actually work since it isn't an actual website:*/}
-                                <li><a href='#'><i><BsFacebook/></i></a></li>
-                                <li><a href='#'><i><BsLinkedin/></i></a></li>
-                                <li><a href='#'><i><BsInstagram/></i></a></li>
+                                    {/*Following links don't actually work since it isn't an actual website:*/}
+                                    <li><a href='#'><i><BsFacebook/></i></a></li>
+                                    <li><a href='#'><i><BsLinkedin/></i></a></li>
+                                    <li><a href='#'><i><BsInstagram/></i></a></li>
+                                </ul>
                             </div>
                     </div>
                 </div>

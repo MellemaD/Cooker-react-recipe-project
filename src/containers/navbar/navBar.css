@@ -159,7 +159,7 @@ nav .bar i{
     }
     #check:checked ~ nav ul{
         visibility: visible;
-        height: 465px;
+        height: 265px;
     }
     #check:checked ~ nav ul li:nth-child(1),
     #check:checked ~ nav ul li:nth-child(2),

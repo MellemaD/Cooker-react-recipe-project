@@ -59,6 +59,7 @@
 }
 
 .container .card h2 {
+    text-align: center;
     padding: 0;
     margin: 0 0 10px;
     letter-spacing: -.075rem;
