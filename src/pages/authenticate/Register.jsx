@@ -81,7 +81,7 @@ const Register = () => {
             if(!err?.response){
                 setErrMsg('No Server Response');
             } else if(err.response?.status === 400){
-                setErrMsg('email or username in use...')
+                setErrMsg('Email or username already in use. Try a different one or login instead.')
             } else{
                 setErrMsg('Registration failed');
             }

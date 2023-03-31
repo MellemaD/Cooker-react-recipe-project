@@ -49,8 +49,10 @@ const InputStyle = styled.input`
     width: 350px;
 `
 const ButtonStyle = styled.button`
+    height: 23px;
     border: none;
-    padding: 2px 3px;
+    padding: 0 2px;
+    margin: 2px 0;
     font-size: 1.1rem;
     box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
     color: #0a5071;

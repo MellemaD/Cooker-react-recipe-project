@@ -25,13 +25,13 @@ function Cards({data}) {
     const navigate = useNavigate();
 
     const handleNavigate = () => {
-        navigate('/authenticate')
+        navigate('/error/unauthorized');
     }
 
     const handleSetFavourite = (event, recipe) => {
         event.preventDefault();
             if(!isFavourite(recipe.label)){
-                addFavourite(recipe.label,
+                const addTo = addFavourite(recipe.label,
                     recipe.label,
                     recipe.label,
                     recipe.ingredientLines,
@@ -39,6 +39,9 @@ function Cards({data}) {
                     recipe.image,
                     recipe.url
             )
+                if (addTo === false){
+                    navigate('/error/maximum');
+                }
                 return ''
             } else if(isFavourite(recipe.label)){
                 deleteFavourite(recipe)

@@ -81,7 +81,7 @@ export const GlobalProvider = (props) => {
                     return newFavourites
                 })
         } else{
-            return "Sorry, there are too many favorites"
+            return false
         }
 
     }
